@@ -1,0 +1,99 @@
+<style>
+  /* Fond animé subtil */
+  body {
+    background: linear-gradient(270deg, #6a11cb, #2575fc, #6a11cb);
+    background-size: 600% 600%;
+    animation: gradientBG 15s ease infinite;
+  }
+  @keyframes gradientBG {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+  }
+
+  .container-irm {
+    max-width: 900px;
+    margin: 3rem auto;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 15px rgba(37,117,252,0.4);
+  }
+
+  h2 {
+    color: #2575fc;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead {
+    background-color: #2575fc;
+    color: white;
+  }
+  th, td {
+    padding: 0.75rem 1rem;
+    border: 1px solid #dee2e6;
+    text-align: center;
+    vertical-align: middle;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: #f8f9fa;
+  }
+
+  a.btn-download {
+    color: #2575fc;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  a.btn-download:hover {
+    text-decoration: underline;
+  }
+
+  a.btn-back {
+    display: inline-block;
+    margin-top: 1.5rem;
+    color: #2575fc;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  a.btn-back:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="container-irm">
+  <h2>Mes IRM</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Fichier</th>
+        <th>Date</th>
+        <th>Prédiction IA</th>
+        <th>Confiance</th>
+        <th>Confirmé par médecin</th>
+        <th>Commentaire médecin</th>
+        <th>Téléchargement</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for irm in irm_images %}
+      <tr>
+        <td>{{ irm.filename }}</td>
+        <td>{{ irm.uploaded_at.strftime('%Y-%m-%d %H:%M') }}</td>
+        <td>{{ irm.prediction }}</td>
+        <td>{{ irm.confidence }}%</td>
+        <td>{{ 'Oui' if irm.confirmed_by_medecin else 'Non' }}</td>
+        <td>{{ irm.commentaire_medecin or '---' }}</td>
+        <td><a href="{{ url_for('static', filename='uploads/' + irm.filename) }}" download class="btn-download">Télécharger</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{{ url_for('main.dashboard') }}" class="btn-back">⬅️ Retour au tableau de bord</a>
+</div>

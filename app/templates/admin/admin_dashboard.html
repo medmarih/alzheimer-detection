@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  /* Fond animé subtil en arrière-plan */
+  body {
+    background: linear-gradient(270deg, #6a11cb, #2575fc, #6a11cb);
+    background-size: 600% 600%;
+    animation: gradientBG 15s ease infinite;
+  }
+  @keyframes gradientBG {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+
+  .admin-container {
+    background: rgba(255,255,255,0.95);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 0 15px rgba(37,117,252,0.4);
+    max-width: 900px;
+    margin: 2rem auto;
+  }
+
+  h2, h3 {
+    color: #2575fc;
+    margin-bottom: 1rem;
+  }
+
+  a.btn, button.btn {
+    transition: background-color 0.3s ease;
+  }
+  a.btn-primary {
+    background-color: #2575fc;
+    border: none;
+    color: white;
+  }
+  a.btn-primary:hover {
+    background-color: #1a54c4;
+  }
+  button.btn-danger {
+    transition: background-color 0.3s ease;
+  }
+  button.btn-danger:hover {
+    background-color: #b22222;
+  }
+
+  ul {
+    padding-left: 1rem;
+  }
+
+  ul li {
+    margin-bottom: 0.6rem;
+  }
+
+  form {
+    display: inline;
+  }
+</style>
+
+<div class="admin-container">
+  <h2>Dashboard Admin</h2>
+
+  <div class="mb-4">
+    <a href="{{ url_for('admin.create_medecin') }}" class="btn btn-primary me-2 mb-2">Créer un médecin</a>
+    <a href="{{ url_for('admin.create_patient') }}" class="btn btn-primary mb-2">Créer un patient</a>
+  </div>
+
+  <h3>Médecins :</h3>
+  <ul class="list-group mb-4">
+    {% for medecin in medecins %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>{{ medecin.username }} ({{ medecin.email }})</div>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h3>Liste des patients :</h3>
+  <ul class="list-group mb-4">
+    {% for patient in patients %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>{{ patient.username }} — {{ patient.email }}</div>
+        <form action="{{ url_for('admin.delete_user', user_id=patient.id) }}" method="POST" onsubmit="return confirm('Confirmer la suppression ?');">
+          <button type="submit" class="btn btn-danger btn-sm">🗑 Supprimer</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Déconnexion</a>
+</div>
+{% endblock %}

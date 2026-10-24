@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Historique IRM - {{ patient.username }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="text-center mb-4">🧾 Historique IRM du patient <strong>{{ patient.username }}</strong></h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover shadow">
+            <thead class="table-dark">
+                <tr>
+                    <th>📄 Fichier</th>
+                    <th>📅 Date upload</th>
+                    <th>🧠 Prédiction IA</th>
+                    <th>🔍 Confiance</th>
+                    <th>✅ Confirmé ?</th>
+                    <th>💬 Commentaire médecin</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for irm in irm_images %}
+                <tr>
+                    <td>{{ irm.filename }}</td>
+                    <td>{{ irm.uploaded_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ irm.prediction }}</td>
+                    <td>{{ irm.confidence | round(2) }}%</td>
+                    <td>
+                        {% if irm.confirmed_by_medecin %}
+                            <span class="badge bg-success">Oui</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">Non</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ irm.commentaire_medecin or '---' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('medecin.medecin_dashboard') }}" class="btn btn-secondary">
+            ⬅️ Retour au Dashboard Médecin
+        </a>
+    </div>
+</div>
+{% endblock %}

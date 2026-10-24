@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Liste des Patients{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="text-center mb-4">👥 Liste des Patients</h2>
+
+    {% if patients %}
+    <ul class="list-group shadow-sm">
+        {% for patient in patients %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <strong>{{ patient.username }}</strong> (ID : {{ patient.id }})<br>
+                📧 {{ patient.email }}
+            </div>
+            <a href="{{ url_for('medecin.voir_patient_irm', patient_id=patient.id) }}" class="btn btn-outline-primary btn-sm">
+                Voir ses IRM
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="alert alert-warning text-center mt-3">
+        Aucun patient enregistré pour le moment.
+    </div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('medecin.medecin_dashboard') }}" class="btn btn-secondary">
+            ⬅️ Retour au Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

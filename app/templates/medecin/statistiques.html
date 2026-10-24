@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  /* Fond animé subtil en arrière-plan */
+  body {
+    background: linear-gradient(270deg, #6a11cb, #2575fc, #6a11cb);
+    background-size: 600% 600%;
+    animation: gradientBG 15s ease infinite;
+  }
+  @keyframes gradientBG {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+
+  /* Style du conteneur */
+  .stats-container {
+    background-color: rgba(255,255,255,0.9);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 0 15px rgba(37,117,252,0.4);
+  }
+
+  /* Titre */
+  h2 {
+    color: #2575fc;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Style des badges */
+  .list-group-item .badge {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  /* Bouton retour stylé */
+  .btn-secondary {
+    background-color: #2575fc;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  .btn-secondary:hover {
+    background-color: #1a54c4;
+  }
+</style>
+
+<div class="container py-5 d-flex flex-column align-items-center">
+  <div class="stats-container w-100" style="max-width: 480px;">
+    <h2>📊 Statistiques générales</h2>
+
+    <ul class="list-group mb-4">
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Total d’IRM analysées
+        <span class="badge bg-primary rounded-pill">{{ total }}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        IRM normales
+        <span class="badge bg-success rounded-pill">{{ normales }}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        IRM suspectes
+        <span class="badge bg-danger rounded-pill">{{ suspectes }}</span>
+      </li>
+    </ul>
+
+    <a href="{{ url_for('medecin.medecin_dashboard') }}" class="btn btn-secondary">
+      ⬅️ Retour
+    </a>
+  </div>
+</div>
+{% endblock %}

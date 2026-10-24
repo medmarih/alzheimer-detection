@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Environnements virtuels
+venv/
+venv1/
+.venv/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Données et bases de données locales
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# Jupyter et éditeurs
+.ipynb_checkpoints/
+.vscode/
+.idea/
+.DS_Store
+
+# Logs
+*.log
+
+# Modèles volumineux
+*.h5
+*.hdf5
+*.keras
+*.pth
+*.pt
+*.ckpt

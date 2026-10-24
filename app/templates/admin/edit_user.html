@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  /* Fond animé subtil en arrière-plan */
+  body {
+    background: linear-gradient(270deg, #6a11cb, #2575fc, #6a11cb);
+    background-size: 600% 600%;
+    animation: gradientBG 15s ease infinite;
+  }
+  @keyframes gradientBG {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+
+  .form-container {
+    max-width: 480px;
+    background: rgba(255,255,255,0.95);
+    margin: 3rem auto;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 15px rgba(37,117,252,0.4);
+  }
+
+  h2 {
+    color: #2575fc;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  label {
+    font-weight: 600;
+  }
+
+  .form-control {
+    margin-bottom: 1.25rem;
+  }
+
+  button.btn-primary {
+    background-color: #2575fc;
+    border: none;
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+  }
+  button.btn-primary:hover {
+    background-color: #1a54c4;
+  }
+</style>
+
+<div class="form-container">
+  <h2>Modifier l'Utilisateur</h2>
+  <form method="POST" novalidate>
+    <div class="mb-3">
+      <label for="username" class="form-label">Nom d'utilisateur</label>
+      <input type="text" id="username" name="username" class="form-control" value="{{ user.username }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="role" class="form-label">Rôle</label>
+      <select id="role" name="role" class="form-select" required>
+        <option value="patient" {% if user.role == 'patient' %}selected{% endif %}>Patient</option>
+        <option value="medecin" {% if user.role == 'medecin' %}selected{% endif %}>Médecin</option>
+        <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Modifier l'utilisateur</button>
+  </form>
+</div>
+{% endblock %}

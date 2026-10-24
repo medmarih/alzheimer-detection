@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('admin.admin_dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('admin.create_medecin') }}">Créer Médecin</a></li>
+            <li><a href="{{ url_for('admin.create_patient') }}">Créer Patient</a></li>
+            <li><a href="{{ url_for('admin.view_user', user_id=current_user.id) }}">Mon Profil</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Se déconnecter</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="flash {{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

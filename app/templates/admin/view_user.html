@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  /* Fond animé subtil en arrière-plan */
+  body {
+    background: linear-gradient(270deg, #6a11cb, #2575fc, #6a11cb);
+    background-size: 600% 600%;
+    animation: gradientBG 15s ease infinite;
+  }
+  @keyframes gradientBG {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+
+  .container-details {
+    max-width: 480px;
+    background: rgba(255, 255, 255, 0.95);
+    margin: 3rem auto;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 15px rgba(37,117,252,0.4);
+  }
+
+  h2 {
+    color: #2575fc;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  table.table {
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-primary {
+    background-color: #2575fc;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin-right: 0.5rem;
+  }
+  .btn-primary:hover {
+    background-color: #1a54c4;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  .btn-danger:hover {
+    background-color: #b02a37;
+  }
+
+  form {
+    display: inline;
+  }
+</style>
+
+<div class="container-details">
+  <h2>Détails de l'Utilisateur</h2>
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <th>Nom d'utilisateur</th>
+        <td>{{ user.username }}</td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td>{{ user.email }}</td>
+      </tr>
+      <tr>
+        <th>Rôle</th>
+        <td>{{ user.role }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <a href="{{ url_for('admin.edit_user', user_id=user.id) }}" class="btn btn-primary">Modifier</a>
+  <form action="{{ url_for('admin.delete_user', user_id=user.id) }}" method="POST" onsubmit="return confirm('Confirmer la suppression ?');">
+    <button type="submit" class="btn btn-danger">Supprimer</button>
+  </form>
+</div>
+{% endblock %}

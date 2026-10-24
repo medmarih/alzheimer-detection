@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  /* Fond animé subtil en arrière-plan */
+  body {
+    background: linear-gradient(270deg, #6a11cb, #2575fc, #6a11cb);
+    background-size: 600% 600%;
+    animation: gradientBG 15s ease infinite;
+  }
+  @keyframes gradientBG {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+
+  /* Conteneur */
+  .validation-container {
+    background-color: rgba(255,255,255,0.95);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 0 15px rgba(37,117,252,0.4);
+  }
+
+  /* Titre */
+  h1 {
+    color: #2575fc;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Table Bootstrap avec ombre */
+  table {
+    width: 100%;
+  }
+
+  /* Liens action stylisés */
+  .action-links a {
+    margin: 0 0.5rem;
+    font-weight: 600;
+    color: #2575fc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .action-links a:hover {
+    color: #1a54c4;
+    text-decoration: underline;
+  }
+</style>
+
+<div class="container py-5 validation-container" style="max-width: 900px;">
+  <h1>Validation des IRM</h1>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-primary text-center">
+        <tr>
+          <th>Patient</th>
+          <th>Fichier IRM</th>
+          <th>Prédiction IA</th>
+          <th>Confiance</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for irm in irm_images %}
+        <tr class="text-center">
+          <td>{{ irm.patient_id }}</td>
+          <td>
+            <a href="{{ url_for('static', filename='uploads/' + irm.filename) }}" target="_blank" class="text-decoration-none">
+              {{ irm.filename }}
+            </a>
+          </td>
+          <td>{{ irm.prediction }}</td>
+          <td>{{ "%.2f"|format(irm.confidence * 100) }}%</td>
+          <td class="action-links">
+            <a href="{{ url_for('medecin.confirmer_diagnostic', irm_id=irm.id, decision='Confirme') }}">Confirmer</a> |
+            <a href="{{ url_for('medecin.confirmer_diagnostic', irm_id=irm.id, decision='Rejette') }}">Rejeter</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

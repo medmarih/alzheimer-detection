@@ -1,0 +1,24 @@
+<!-- templates/medecin/historique.html -->
+
+<h1>Historique des validations</h1>
+
+<table border="1">
+    <tr>
+        <th>Patient</th>
+        <th>Fichier IRM</th>
+        <th>Prédiction IA</th>
+        <th>Confiance</th>
+        <th>Décision Médecin</th>
+        <th>Commentaire</th>
+    </tr>
+    {% for irm in irm_images %}
+    <tr>
+        <td>{{ irm.patient_id }}</td>
+        <td><a href="{{ url_for('static', filename='uploads/' + irm.filename) }}" target="_blank">{{ irm.filename }}</a></td>
+        <td>{{ irm.prediction }}</td>
+        <td>{{ irm.confidence }}%</td>
+        <td>{{ irm.confirmed_result }}</td>
+        <td>{{ irm.commentaire_medecin or "Aucun" }}</td>
+    </tr>
+    {% endfor %}
+</table>

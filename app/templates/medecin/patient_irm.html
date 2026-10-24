@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  /* Fond animé subtil en arrière-plan */
+  body {
+    background: linear-gradient(270deg, #6a11cb, #2575fc, #6a11cb);
+    background-size: 600% 600%;
+    animation: gradientBG 15s ease infinite;
+  }
+  @keyframes gradientBG {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+
+  /* Style de la table */
+  table {
+    background-color: rgba(255,255,255,0.9);
+    border-radius: 0.5rem;
+  }
+
+  /* Style des en-têtes */
+  thead th {
+    background-color: #2575fc;
+    color: white;
+    text-align: center;
+  }
+
+  /* Alignement du contenu des colonnes */
+  tbody td {
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  /* Style image dans la table */
+  tbody td img {
+    border-radius: 0.25rem;
+    box-shadow: 0 0 8px rgba(37,117,252,0.5);
+  }
+
+  /* Bouton retour stylé */
+  .btn-secondary {
+    background-color: #2575fc;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  .btn-secondary:hover {
+    background-color: #1a54c4;
+  }
+</style>
+
+<div class="container py-4">
+  <h2 class="mb-4 text-white">IRM de {{ patient.nom }} {{ patient.prenom }}</h2>
+
+  <div class="table-responsive shadow p-3 mb-4 rounded">
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Date upload</th>
+          <th>Prédiction IA</th>
+          <th>Confiance</th>
+          <th>Validée par médecin ?</th>
+          <th>Commentaire médecin</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for irm in irm_images %}
+        <tr>
+          <td><img src="{{ url_for('static', filename='uploads/' + irm.filename) }}" width="100" alt="IRM image"></td>
+          <td>{{ irm.uploaded_at.strftime('%d/%m/%Y %H:%M') }}</td>
+          <td>{{ irm.prediction }}</td>
+          <td>{{ "%.2f"|format(irm.confidence * 100) }}%</td>
+          <td>{{ 'Oui' if irm.confirmed_by_medecin else 'Non' }}</td>
+          <td>{{ irm.commentaire_medecin or '—' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <a href="{{ url_for('medecin.medecin_dashboard') }}" class="btn btn-secondary">
+    ⬅️ Retour
+  </a>
+</div>
+{% endblock %}

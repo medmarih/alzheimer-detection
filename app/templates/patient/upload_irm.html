@@ -1,0 +1,116 @@
+<style>
+  /* Fond animé */
+  body {
+    background: linear-gradient(270deg, #6a11cb, #2575fc, #6a11cb);
+    background-size: 600% 600%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .container-upload {
+    max-width: 480px;
+    margin: 4rem auto;
+    background: rgba(255,255,255,0.95);
+    padding: 2.5rem 3rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 15px rgba(37,117,252,0.4);
+    text-align: center;
+  }
+
+  h2 {
+    color: #2575fc;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+
+  form {
+    margin-bottom: 2rem;
+  }
+
+  input[type="file"] {
+    display: block;
+    margin: 1rem auto 2rem auto;
+    cursor: pointer;
+  }
+
+  /* Bouton upload amélioré */
+  button[type="submit"] {
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+    border: none;
+    color: white;
+    padding: 0.75rem 2.5rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(37,117,252,0.4);
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  button[type="submit"]:hover,
+  button[type="submit"]:focus {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    box-shadow: 0 10px 30px rgba(106,17,203,0.6);
+    transform: translateY(-3px);
+    outline: none;
+  }
+
+  /* Styles communs pour les liens boutons */
+  a.btn {
+    display: inline-block;
+    margin: 0.5rem 1rem;
+    padding: 0.6rem 1.8rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  }
+
+  a.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+  a.btn-secondary:hover,
+  a.btn-secondary:focus {
+    background-color: #565e64;
+    box-shadow: 0 8px 22px rgba(86,94,100,0.5);
+    transform: translateY(-2px);
+    outline: none;
+  }
+
+  a.btn-danger {
+    background-color: #dc3545;
+    color: white;
+  }
+  a.btn-danger:hover,
+  a.btn-danger:focus {
+    background-color: #b02a37;
+    box-shadow: 0 8px 22px rgba(176,42,55,0.6);
+    transform: translateY(-2px);
+    outline: none;
+  }
+</style>
+
+<div class="container-upload">
+  <h2>Uploader une IRM</h2>
+
+  <form method="POST" enctype="multipart/form-data">
+    <label for="irm_image" class="form-label">Choisissez un fichier IRM (png, jpg, jpeg) :</label>
+    <input type="file" name="irm_image" id="irm_image" accept=".png,.jpg,.jpeg" required>
+
+    <button type="submit" aria-label="Uploader une IRM">Uploader</button>
+  </form>
+
+  <a href="{{ url_for('patient.patient_dashboard') }}" class="btn btn-secondary" aria-label="Retour au tableau de bord">Retour au tableau de bord</a>
+  <a href="{{ url_for('auth.logout') }}" class="btn btn-danger" aria-label="Déconnexion">Déconnexion</a>
+</div>

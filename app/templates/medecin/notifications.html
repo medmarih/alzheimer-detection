@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Mes Notifications{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="text-center mb-4">🔔 Mes Notifications</h2>
+
+    {% if notifications %}
+        <ul class="list-group shadow">
+            {% for notif in notifications %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="bi bi-chat-left-text"></i> {{ notif.message }}
+                </div>
+                <small class="text-muted">{{ notif.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert alert-info text-center">
+            Aucune notification pour le moment.
+        </div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('medecin.medecin_dashboard') }}" class="btn btn-secondary">
+            ⬅️ Retour au Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}
